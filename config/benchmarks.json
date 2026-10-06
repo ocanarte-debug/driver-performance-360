@@ -1,0 +1,47 @@
+{
+  "_note": "Benchmarks manuales por tipo de vehículo. Se activan cuando useDynamic=false o no hay suficientes datos.",
+  "global": {
+    "speeding_per100km": 1.2,
+    "harshBraking_per100km": 1.1,
+    "harshAcceleration_per100km": 1.4,
+    "harshCornering_per100km": 0.9,
+    "other_per100km": 0.5,
+    "idleRatePct": 8.5,
+    "fuelConsumption_kmL": 3.6,
+    "utilizationPct": 72
+  },
+  "Camión": {
+    "speeding_per100km": 0.9,
+    "harshBraking_per100km": 0.8,
+    "harshAcceleration_per100km": 1.0,
+    "harshCornering_per100km": 0.6,
+    "other_per100km": 0.4,
+    "idleRatePct": 10.0,
+    "fuelConsumption_kmL": 2.8,
+    "utilizationPct": 75
+  },
+  "Camioneta": {
+    "speeding_per100km": 1.3,
+    "harshBraking_per100km": 1.2,
+    "harshAcceleration_per100km": 1.6,
+    "harshCornering_per100km": 1.0,
+    "other_per100km": 0.6,
+    "idleRatePct": 7.5,
+    "fuelConsumption_kmL": 5.2,
+    "utilizationPct": 68
+  },
+  "Vehículo Liviano": {
+    "speeding_per100km": 1.5,
+    "harshBraking_per100km": 1.4,
+    "harshAcceleration_per100km": 1.8,
+    "harshCornering_per100km": 1.2,
+    "other_per100km": 0.7,
+    "idleRatePct": 6.0,
+    "fuelConsumption_kmL": 8.5,
+    "utilizationPct": 65
+  },
+  "GNV": {
+    "fuelConsumption_kmM3": 1.8,
+    "idleRatePct": 9.0
+  }
+}

@@ -1,0 +1,238 @@
+/**
+ * Driver Performance 360 — css/tables.css
+ * Data tables, ranking table, sorting indicators.
+ * Version: 1.0.0
+ */
+
+/* ─── Base Data Table ────────────────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--dp360-surface);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dp360-border);
+}
+
+.data-table thead tr {
+  background: var(--dp360-bg);
+}
+
+.data-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dp360-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--dp360-border);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.data-table th.sortable {
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.data-table th.sortable:hover {
+  color: var(--dp360-primary);
+}
+
+.data-table th.sorted-asc::after  { content: ' ↑'; }
+.data-table th.sorted-desc::after { content: ' ↓'; }
+.data-table th.sorted-asc,
+.data-table th.sorted-desc { color: var(--dp360-primary); }
+
+.data-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--dp360-border-light);
+  color: var(--dp360-text);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+.data-table tbody tr {
+  transition: background var(--transition);
+}
+
+.data-table tbody tr:hover {
+  background: var(--dp360-bg);
+}
+
+.data-table tbody tr.clickable-row {
+  cursor: pointer;
+}
+
+.data-table tbody tr.clickable-row:hover {
+  background: var(--dp360-primary-light);
+}
+
+/* ─── Ranking Table Specifics ────────────────────────────────────────────── */
+.rank-col {
+  font-weight: 700;
+  color: var(--dp360-text-muted);
+  font-size: 12px;
+  width: 32px;
+  text-align: center;
+}
+
+.rank-medal {
+  font-size: 16px;
+}
+
+.driver-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.driver-initials {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--dp360-primary-light);
+  color: var(--dp360-primary);
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.driver-name-text {
+  font-weight: 500;
+  color: var(--dp360-text);
+}
+
+/* ─── Scrollable Table Container ─────────────────────────────────────────── */
+.table-scroll {
+  overflow-x: auto;
+  border-radius: var(--card-radius);
+}
+
+.table-scroll .data-table {
+  min-width: 700px;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.table-wrap {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.table-wrap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--dp360-border);
+  background: var(--dp360-bg);
+}
+
+.table-wrap-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dp360-text);
+}
+
+/* ─── Safety Component Table ─────────────────────────────────────────────── */
+.component-table { margin-top: 8px; }
+
+.component-table th { background: transparent; }
+
+.component-weight-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.weight-track {
+  flex: 1;
+  height: 6px;
+  background: var(--dp360-border);
+  border-radius: 3px;
+  overflow: hidden;
+  max-width: 60px;
+}
+
+.weight-fill {
+  height: 100%;
+  background: var(--dp360-primary);
+  border-radius: 3px;
+}
+
+/* ─── Improvement Delta ──────────────────────────────────────────────────── */
+.delta-positive { color: var(--color-excellent); font-weight: 600; }
+.delta-negative { color: var(--color-critical);  font-weight: 600; }
+.delta-neutral  { color: var(--dp360-text-muted); }
+
+/* ─── Table Actions Column ───────────────────────────────────────────────── */
+.action-col {
+  white-space: nowrap;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* ─── Pagination Bar ─────────────────────────────────────────────────────── */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--dp360-border);
+  font-size: 12px;
+  color: var(--dp360-text-muted);
+  background: var(--dp360-bg);
+}
+
+.pagination-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.page-btn {
+  min-width: 28px;
+  height: 28px;
+  border: 1px solid var(--dp360-border);
+  border-radius: 6px;
+  background: var(--dp360-surface);
+  color: var(--dp360-text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: var(--dp360-primary-light);
+  color: var(--dp360-primary);
+  border-color: var(--dp360-primary);
+}
+
+.page-btn.active {
+  background: var(--dp360-primary);
+  color: white;
+  border-color: var(--dp360-primary);
+}
+
+.page-btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
