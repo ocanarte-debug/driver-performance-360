@@ -1,0 +1,563 @@
+/**
+ * Driver Performance 360 — css/dashboard.css
+ * KPI cards, score badges, status chips, eval badges,
+ * driver profile, breakdown, coaching, improvement.
+ * Version: 1.0.0
+ */
+
+/* ─── KPI Grid ───────────────────────────────────────────────────────────── */
+.kpi-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.kpi-card {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: var(--card-radius);
+  padding: 16px 20px;
+  min-width: 140px;
+  flex: 1;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--dp360-primary);
+  opacity: .3;
+}
+
+.kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -.02em;
+}
+
+.kpi-unit {
+  font-size: 11px;
+  color: var(--dp360-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+
+.kpi-label {
+  font-size: 12px;
+  color: var(--dp360-text-muted);
+  font-weight: 500;
+}
+
+/* ─── Score Badge ────────────────────────────────────────────────────────── */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.score-badge-lg {
+  min-width: 64px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 10px;
+}
+
+/* Score circle for driver header */
+.score-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.score-circle-value {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.score-circle-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  opacity: .85;
+}
+
+/* ─── Status Chip ────────────────────────────────────────────────────────── */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-chip.status-excellent  { background:#d1fae5; color:#065f46; }
+.status-chip.status-good       { background:#dcfce7; color:#166534; }
+.status-chip.status-acceptable { background:#fef3c7; color:#92400e; }
+.status-chip.status-improvable { background:#ffedd5; color:#9a3412; }
+.status-chip.status-critical   { background:#fee2e2; color:#991b1b; }
+
+/* ─── Evaluation Status Badge ────────────────────────────────────────────── */
+.eval-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.eval-full   { background:#d1fae5; color:#065f46; }
+.eval-prov   { background:#fef3c7; color:#92400e; }
+.eval-insuf  { background:#f1f5f9; color:#475569; }
+
+/* ─── Driver Profile Header ──────────────────────────────────────────────── */
+.driver-profile-header {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: var(--card-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+}
+
+.driver-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--dp360-primary);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.driver-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.driver-header-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dp360-text);
+  margin-bottom: 4px;
+}
+
+.driver-header-meta {
+  font-size: 12px;
+  color: var(--dp360-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.driver-header-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.driver-header-scores {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.driver-select-wrap {
+  margin-bottom: 16px;
+}
+
+.driver-select-wrap .form-control {
+  max-width: 340px;
+}
+
+/* ─── Score Summary Cards ────────────────────────────────────────────────── */
+.score-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.score-summary-card {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.score-summary-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--dp360-text-muted);
+  margin-bottom: 8px;
+}
+
+.score-summary-value {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -.02em;
+}
+
+.score-summary-sub {
+  font-size: 11px;
+  color: var(--dp360-text-muted);
+}
+
+/* ─── Breakdown Table ────────────────────────────────────────────────────── */
+.breakdown-flow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--dp360-text-muted);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.breakdown-flow-step {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.breakdown-flow-value {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--dp360-text);
+}
+
+.breakdown-flow-arrow {
+  color: var(--dp360-text-light);
+  font-size: 16px;
+}
+
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.breakdown-table th {
+  text-align: left;
+  padding: 8px 10px;
+  background: var(--dp360-bg);
+  color: var(--dp360-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: 1px solid var(--dp360-border);
+}
+
+.breakdown-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--dp360-border-light);
+  color: var(--dp360-text);
+}
+
+.breakdown-table tr:last-child td { border-bottom: none; }
+
+.breakdown-impact {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 600;
+}
+
+.breakdown-impact.negative { color: var(--color-critical); }
+.breakdown-impact.neutral  { color: var(--color-acceptable); }
+.breakdown-impact.positive { color: var(--color-excellent); }
+
+/* ─── Component Detail Cards ─────────────────────────────────────────────── */
+.component-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.component-card {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.component-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dp360-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+
+.component-card-value {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--dp360-text);
+  margin-bottom: 4px;
+}
+
+.component-card-sub {
+  font-size: 11px;
+  color: var(--dp360-text-muted);
+}
+
+.component-card-score {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--dp360-border-light);
+}
+
+.component-mini-score {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.component-deviation {
+  font-size: 11px;
+  color: var(--dp360-text-muted);
+}
+
+/* ─── Recommendations ────────────────────────────────────────────────────── */
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--dp360-border-light);
+  background: var(--dp360-surface);
+}
+
+.recommendation-item.priority-critical {
+  border-color: #fecaca;
+  background: #fff5f5;
+}
+
+.recommendation-item.priority-high {
+  border-color: #fed7aa;
+  background: #fffaf5;
+}
+
+.recommendation-item.priority-medium {
+  border-color: #fde68a;
+  background: #fffef5;
+}
+
+.recommendation-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.recommendation-body { flex: 1; }
+
+.recommendation-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dp360-text);
+  margin-bottom: 2px;
+}
+
+.recommendation-detail {
+  font-size: 12px;
+  color: var(--dp360-text-muted);
+  line-height: 1.5;
+}
+
+/* ─── Risk Count Bar ─────────────────────────────────────────────────────── */
+.risk-count-bar {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.risk-count-bar strong {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* ─── Coaching Plan Status ───────────────────────────────────────────────── */
+.plan-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-pending   { background: #f1f5f9; color: #475569; }
+.status-active    { background: #dbeafe; color: #1d4ed8; }
+.status-completed { background: #d1fae5; color: #065f46; }
+.status-cancelled { background: #fee2e2; color: #991b1b; }
+
+/* ─── Weakness Chip ──────────────────────────────────────────────────────── */
+.weakness-chip {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+/* ─── Chart Containers ───────────────────────────────────────────────────── */
+.chart-wrap {
+  background: var(--dp360-surface);
+  border: 1px solid var(--dp360-border);
+  border-radius: var(--card-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dp360-text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-canvas-wrap {
+  position: relative;
+  height: 280px;
+}
+
+.chart-canvas-wrap canvas {
+  max-height: 280px;
+}
+
+.chart-canvas-wrap.chart-md { height: 220px; }
+.chart-canvas-wrap canvas { max-height: 100%; }
+
+/* 2-column chart row */
+.chart-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ─── Top/Bottom Tables ──────────────────────────────────────────────────── */
+.top-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ─── Fleet Summary Banner ───────────────────────────────────────────────── */
+.fleet-summary-banner {
+  background: linear-gradient(135deg, var(--dp360-primary) 0%, var(--dp360-accent) 100%);
+  border-radius: var(--card-radius);
+  padding: 20px;
+  color: white;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.fleet-banner-score {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+
+.fleet-banner-label {
+  font-size: 12px;
+  opacity: .8;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.fleet-banner-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.fleet-banner-stat {
+  text-align: center;
+}
+
+.fleet-banner-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.fleet-banner-stat-label {
+  font-size: 11px;
+  opacity: .75;
+}
