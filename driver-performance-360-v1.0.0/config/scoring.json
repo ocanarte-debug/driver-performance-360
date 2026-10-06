@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "weights": { "safety": 0.60, "efficiency": 0.40 },
+  "safety": {
+    "speeding": 0.25, "harshBraking": 0.25,
+    "harshAcceleration": 0.20, "harshCornering": 0.15, "other": 0.15
+  },
+  "efficiency": { "idling": 0.40, "fuel": 0.45, "utilization": 0.15 },
+  "minimumKm": 500,
+  "provisionalKm": 100,
+  "utilizationEnabled": true,
+  "benchmark": {
+    "useDynamic": true,
+    "fallbackToStatic": true,
+    "percentiles": { "excellent": 25, "reference": 50, "poor": 75 }
+  },
+  "thresholds": {
+    "speeding": [
+      {"max": 0.30, "score": 100}, {"max": 0.60, "score": 92},
+      {"max": 1.00, "score": 82}, {"max": 1.50, "score": 70},
+      {"max": 2.50, "score": 55}, {"max": 4.00, "score": 35}, {"max": 9999, "score": 15}
+    ],
+    "harshBraking": [
+      {"max": 0.50, "score": 100}, {"max": 1.00, "score": 95},
+      {"max": 1.50, "score": 90}, {"max": 2.00, "score": 80},
+      {"max": 3.00, "score": 65}, {"max": 4.00, "score": 45}, {"max": 9999, "score": 20}
+    ],
+    "harshAcceleration": [
+      {"max": 0.60, "score": 100}, {"max": 1.20, "score": 95},
+      {"max": 1.80, "score": 88}, {"max": 2.40, "score": 75},
+      {"max": 3.50, "score": 58}, {"max": 5.00, "score": 38}, {"max": 9999, "score": 15}
+    ],
+    "harshCornering": [
+      {"max": 0.40, "score": 100}, {"max": 0.80, "score": 95},
+      {"max": 1.20, "score": 88}, {"max": 1.80, "score": 75},
+      {"max": 2.50, "score": 58}, {"max": 3.50, "score": 40}, {"max": 9999, "score": 20}
+    ],
+    "other": [
+      {"max": 0.20, "score": 100}, {"max": 0.50, "score": 90},
+      {"max": 1.00, "score": 78}, {"max": 1.80, "score": 62},
+      {"max": 3.00, "score": 45}, {"max": 5.00, "score": 28}, {"max": 9999, "score": 10}
+    ],
+    "idling": [
+      {"max": 5, "score": 100}, {"max": 8, "score": 92},
+      {"max": 12, "score": 80}, {"max": 16, "score": 65},
+      {"max": 22, "score": 48}, {"max": 30, "score": 28}, {"max": 9999, "score": 10}
+    ],
+    "fuelDeviation": [
+      {"max": 0, "score": 100}, {"max": 5, "score": 90},
+      {"max": 10, "score": 78}, {"max": 15, "score": 63},
+      {"max": 20, "score": 45}, {"max": 30, "score": 28}, {"max": 9999, "score": 10}
+    ],
+    "utilization": [
+      {"min": 80, "score": 100}, {"min": 65, "score": 88},
+      {"min": 50, "score": 72}, {"min": 35, "score": 55},
+      {"min": 20, "score": 38}, {"min": 0, "score": 20}
+    ]
+  },
+  "status": {
+    "excellent":  {"min": 90, "max": 100, "label": "Excelente",  "color": "#10b981", "bg": "#d1fae5"},
+    "good":       {"min": 80, "max": 89,  "label": "Bueno",      "color": "#3b82f6", "bg": "#dbeafe"},
+    "acceptable": {"min": 70, "max": 79,  "label": "Aceptable",  "color": "#f59e0b", "bg": "#fef3c7"},
+    "improvable": {"min": 60, "max": 69,  "label": "Mejorable",  "color": "#f97316", "bg": "#ffedd5"},
+    "critical":   {"min": 0,  "max": 59,  "label": "Crítico",    "color": "#ef4444", "bg": "#fee2e2"}
+  }
+}

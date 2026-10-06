@@ -1,0 +1,236 @@
+/**
+ * Driver Performance 360 — css/responsive.css
+ * Mobile and tablet responsive overrides.
+ * Version: 1.0.0
+ */
+
+/* ─── Large Screens (1400px+) ────────────────────────────────────────────── */
+@media (min-width: 1400px) {
+  .kpi-grid { gap: 16px; }
+  .kpi-value { font-size: 32px; }
+  #dp360-content { padding: 28px; }
+}
+
+/* ─── Medium (tablets, 768–1199px) ──────────────────────────────────────── */
+@media (max-width: 1199px) {
+  :root { --nav-width: 190px; }
+
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .chart-row-2 { grid-template-columns: 1fr; }
+  .top-bottom-grid { grid-template-columns: 1fr; }
+  .score-summary-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ─── Small Tablets (768–899px) ──────────────────────────────────────────── */
+@media (max-width: 899px) {
+  :root {
+    --nav-width: 56px;
+    --content-padding: 16px;
+  }
+
+  .nav-logo-text { display: none; }
+  .nav-btn { padding: 10px; justify-content: center; }
+  .nav-btn-icon { font-size: 18px; margin: 0; }
+  .nav-btn span:not(.nav-btn-icon) { display: none; }
+  .nav-section-label { display: none; }
+  .nav-footer-meta { display: none; }
+
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .score-summary-grid { grid-template-columns: 1fr 1fr 1fr; }
+
+  .kpi-card { min-width: 110px; }
+  .kpi-value { font-size: 22px; }
+
+  .driver-profile-header { flex-wrap: wrap; }
+  .driver-header-scores { width: 100%; }
+}
+
+/* ─── Mobile (< 768px) ───────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  :root {
+    --nav-width: 0px;
+    --content-padding: 12px;
+    --header-height: 50px;
+  }
+
+  /* Hide sidebar, use bottom nav instead */
+  #dp360-nav { display: none; }
+
+  /* Bottom navigation bar for mobile */
+  #dp360-mobile-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--dp360-surface);
+    border-top: 1px solid var(--dp360-border);
+    z-index: 200;
+    box-shadow: 0 -2px 8px rgba(0,0,0,.06);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  #dp360-mobile-nav::-webkit-scrollbar { display: none; }
+
+  #dp360-mobile-nav .nav-btn {
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    min-width: 64px;
+    font-size: 10px;
+    border-right: none;
+    border-top: 2px solid transparent;
+    align-items: center;
+  }
+
+  #dp360-mobile-nav .nav-btn.active {
+    border-right: none;
+    border-top-color: var(--dp360-primary);
+  }
+
+  #dp360-mobile-nav .nav-btn-icon { font-size: 20px; width: auto; }
+
+  #dp360-content {
+    padding-bottom: 80px; /* room for bottom nav */
+  }
+
+  /* Layout adjustments */
+  #dp360-app { flex-direction: column; }
+  #dp360-main { flex: 1; min-height: 0; }
+
+  /* KPI grid — 2 cols on mobile */
+  .kpi-grid { gap: 8px; }
+  .kpi-card { min-width: calc(50% - 4px); flex: 0 0 calc(50% - 4px); padding: 12px; }
+  .kpi-value { font-size: 20px; }
+  .kpi-label { font-size: 11px; }
+
+  /* Grids */
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .score-summary-grid { grid-template-columns: 1fr; }
+  .chart-row-2 { grid-template-columns: 1fr; }
+  .top-bottom-grid { grid-template-columns: 1fr; }
+  .component-details-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Driver profile header — stack vertically */
+  .driver-profile-header {
+    padding: 14px;
+    flex-wrap: wrap;
+  }
+  .driver-header-scores { width: 100%; margin-top: 8px; }
+
+  /* Charts taller on mobile for readability */
+  .chart-canvas-wrap { height: 240px; }
+
+  /* Filters: hide less important filters on mobile, stack */
+  .filter-bar { gap: 6px; }
+  .filter-control { height: 34px; }
+
+  /* Hide filter summary on mobile */
+  .filter-summary { display: none; }
+
+  /* Filter date: shrink */
+  .filter-date-group .filter-control[type="date"] { width: 120px; }
+
+  /* Rule mapping */
+  .rulemap-toolbar { flex-direction: column; align-items: flex-start; }
+  .rule-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .rule-assign { width: 100%; }
+  .rule-category-select { width: 100%; min-width: unset; }
+
+  /* Modals — full screen on mobile */
+  .modal-box {
+    max-width: 100%;
+    max-height: 95vh;
+    border-radius: 12px 12px 0 0;
+    margin-top: auto;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .dp360-modal { align-items: flex-end; padding: 0; }
+
+  /* Tables: small padding */
+  .data-table th,
+  .data-table td { padding: 7px 8px; font-size: 12px; }
+
+  /* Toast: full-width on mobile */
+  .dp360-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 76px;
+    text-align: center;
+  }
+
+  /* Header */
+  #dp360-header { padding: 0 12px; }
+  #dp360-header-title { font-size: 14px; }
+}
+
+/* ─── Print Styles ───────────────────────────────────────────────────────── */
+@media print {
+  #dp360-nav,
+  #dp360-header .header-actions,
+  #dp360-filters,
+  .btn,
+  #dp360-mobile-nav { display: none !important; }
+
+  #dp360-app { height: auto; overflow: visible; }
+  #dp360-main { overflow: visible; }
+  #dp360-content { overflow: visible; padding: 0; }
+
+  .dp360-view { display: block !important; }
+
+  .card, .kpi-card, .data-table {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  .data-table tbody tr:hover { background: none; }
+}
+
+/* ─── High-Contrast / Accessibility ─────────────────────────────────────── */
+@media (prefers-contrast: high) {
+  :root {
+    --dp360-border: #94a3b8;
+    --dp360-text-muted: #475569;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ─── Geotab Embedded Mode ───────────────────────────────────────────────── */
+/* When running inside MyGeotab frame, the outer shell handles scrolling */
+.geotab-embedded #dp360-app {
+  height: auto;
+  min-height: 100vh;
+}
+
+.geotab-embedded #dp360-main {
+  overflow: visible;
+}
+
+.geotab-embedded #dp360-content {
+  overflow: visible;
+}
+
+/* ─── Dark Mode (future-ready) ───────────────────────────────────────────── */
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dp360-bg: #0f172a;
+    --dp360-surface: #1e293b;
+    --dp360-border: #334155;
+    --dp360-border-light: #1e293b;
+    --dp360-text: #f1f5f9;
+    --dp360-text-muted: #94a3b8;
+    --dp360-text-light: #64748b;
+  }
+}
+*/
