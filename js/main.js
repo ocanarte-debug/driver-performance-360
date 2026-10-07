@@ -33,6 +33,7 @@
   async function init(api, st) {
     if (state.initialized) return;
     state.initialized = true;
+    console.log('[DP360] init() called — api:', api ? 'live' : 'demo/mock');
 
     try {
       // Inject API context
@@ -255,10 +256,20 @@
     try {
       // Try to load from same origin (works in a local file server or Geotab hosting)
       const url = _resolveConfigUrl('config/scoring.json');
-      const resp = await fetch(url);
-      if (resp.ok) return await resp.json();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
+      try {
+        const resp = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeout);
+        if (resp.ok) return await resp.json();
+      } catch (fetchErr) {
+        clearTimeout(timeout);
+        if (fetchErr.name !== 'AbortError') console.warn('[DP360] scoring.json fetch failed:', fetchErr.message);
+        else console.warn('[DP360] scoring.json fetch timed out — using inline defaults');
+      }
     } catch (e) { /* fall through */ }
     // Fallback: inline defaults (copy of scoring.json essentials)
+    console.info('[DP360] Using inline default scoring config');
     return _defaultScoringConfig();
   }
 
@@ -274,60 +285,67 @@
   }
 
   function _defaultScoringConfig() {
+    // Structure MUST match what ScoreEngine expects:
+    //   config.safety       → component weights for safety
+    //   config.efficiency   → component weights for efficiency
+    //   config.weights      → parent weights (safety vs efficiency)
+    //   config.thresholds   → scoring tables
+    //   config.status       → status bands (each entry needs min AND max)
     return {
-      weights: {
-        safety: 0.60,
-        efficiency: 0.40,
-        safetyComponents: {
-          speeding: 0.25, harshBraking: 0.25,
-          harshAcceleration: 0.20, harshCornering: 0.15, other: 0.15
-        },
-        efficiencyComponents: {
-          idling: 0.40, fuel: 0.45, utilization: 0.15
-        }
+      version: '1.0.0-inline',
+      weights: { safety: 0.60, efficiency: 0.40 },
+      // Component weights — used directly as config.safety / config.efficiency in ScoreEngine
+      safety: {
+        speeding: 0.25, harshBraking: 0.25,
+        harshAcceleration: 0.20, harshCornering: 0.15, other: 0.15
       },
-      minimumKm: 100,
-      provisionalKm: 500,
+      efficiency: {
+        idling: 0.40, fuel: 0.45, utilization: 0.15
+      },
+      minimumKm: 500,
+      provisionalKm: 100,
+      utilizationEnabled: false,
       thresholds: {
         speeding: [
-          { max: 0.5, score: 100 }, { max: 1.0, score: 90 }, { max: 2.0, score: 75 },
-          { max: 4.0, score: 55 }, { max: 7.0, score: 35 }, { max: Infinity, score: 10 }
+          { max: 0.30, score: 100 }, { max: 0.60, score: 92 }, { max: 1.0, score: 80 },
+          { max: 2.0, score: 65 }, { max: 4.0, score: 45 }, { max: 7.0, score: 25 },
+          { max: 9999, score: 10 }
         ],
         harshBraking: [
           { max: 0.5, score: 100 }, { max: 1.0, score: 90 }, { max: 2.0, score: 75 },
-          { max: 4.0, score: 55 }, { max: 6.0, score: 35 }, { max: Infinity, score: 10 }
+          { max: 4.0, score: 55 }, { max: 6.0, score: 35 }, { max: 9999, score: 10 }
         ],
         harshAcceleration: [
           { max: 0.5, score: 100 }, { max: 1.0, score: 90 }, { max: 2.0, score: 75 },
-          { max: 4.0, score: 55 }, { max: 6.0, score: 35 }, { max: Infinity, score: 10 }
+          { max: 4.0, score: 55 }, { max: 6.0, score: 35 }, { max: 9999, score: 10 }
         ],
         harshCornering: [
           { max: 1.0, score: 100 }, { max: 2.0, score: 85 }, { max: 4.0, score: 65 },
-          { max: 7.0, score: 40 }, { max: Infinity, score: 15 }
+          { max: 7.0, score: 40 }, { max: 9999, score: 15 }
         ],
         other: [
           { max: 1.0, score: 100 }, { max: 2.0, score: 85 }, { max: 4.0, score: 65 },
-          { max: Infinity, score: 40 }
+          { max: 9999, score: 40 }
         ],
         idling: [
           { max: 5, score: 100 }, { max: 10, score: 85 }, { max: 15, score: 65 },
-          { max: 20, score: 45 }, { max: 25, score: 25 }, { max: Infinity, score: 10 }
+          { max: 20, score: 45 }, { max: 25, score: 25 }, { max: 9999, score: 10 }
         ],
         fuelDeviation: [
           { max: 5, score: 100 }, { max: 10, score: 85 }, { max: 15, score: 65 },
-          { max: 25, score: 45 }, { max: Infinity, score: 20 }
+          { max: 25, score: 45 }, { max: 9999, score: 20 }
         ],
         utilization: [
-          { min: 85, score: 100 }, { min: 75, score: 85 }, { min: 60, score: 65 },
-          { min: 45, score: 45 }, { min: 0, score: 25 }
+          { min: 80, score: 100 }, { min: 70, score: 85 }, { min: 55, score: 65 },
+          { min: 40, score: 45 }, { min: 0, score: 20 }
         ]
       },
       status: {
-        excellent:  { min: 90, label: 'Excelente',  color: '#10b981', bg: '#d1fae5' },
-        good:       { min: 75, label: 'Bueno',      color: '#22c55e', bg: '#dcfce7' },
-        acceptable: { min: 60, label: 'Aceptable',  color: '#f59e0b', bg: '#fef3c7' },
-        improvable: { min: 40, label: 'Improvable', color: '#f97316', bg: '#ffedd5' },
-        critical:   { min: 0,  label: 'Crítico',    color: '#ef4444', bg: '#fee2e2' }
+        excellent:  { min: 90, max: 100, label: 'Excelente',  color: '#10b981', bg: '#d1fae5' },
+        good:       { min: 80, max: 89,  label: 'Bueno',      color: '#3b82f6', bg: '#dbeafe' },
+        acceptable: { min: 70, max: 79,  label: 'Aceptable',  color: '#f59e0b', bg: '#fef3c7' },
+        improvable: { min: 60, max: 69,  label: 'Mejorable',  color: '#f97316', bg: '#ffedd5' },
+        critical:   { min: 0,  max: 59,  label: 'Crítico',    color: '#ef4444', bg: '#fee2e2' }
       }
     };
   }
@@ -399,11 +417,22 @@
     navigateTo: _navigateTo
   };
 
+  // ─── Global error safety net ──────────────────────────────────────────────
+
+  window.addEventListener('error', function (e) {
+    console.error('[DP360] Uncaught error:', e.message, 'at', e.filename, e.lineno);
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    console.error('[DP360] Unhandled promise rejection:', e.reason);
+  });
+
   // ─── Auto-init in demo mode (no MyGeotab context) ─────────────────────────
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Only auto-init if not inside a Geotab frame
-    const inGeotab = window.geotab && window.geotab.addin;
+    // Only auto-init if not inside a Geotab frame.
+    // window.geotab.addin is the MyGeotab Add-In manager — only truthy inside MyGeotab.
+    const inGeotab = !!(window.geotab && typeof window.geotab.addin === 'function');
+    console.log('[DP360] DOMContentLoaded — inGeotab:', inGeotab);
     if (!inGeotab) {
       init(null, null);
     }

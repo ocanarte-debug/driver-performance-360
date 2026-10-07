@@ -366,19 +366,9 @@
    * Called by loadDriverMetrics when in mock mode.
    */
   async function loadMockMetrics(dateFrom, dateTo) {
-    const rawMetrics = DP360.MockData.getMetrics(dateFrom, dateTo);
-
-    // Resolve groups (mock vehicles carry group directly)
-    const vehicles = DP360.MockData.getVehicles();
-    const vehicleMap = {};
-    vehicles.forEach(v => { vehicleMap[v.id] = v; });
-
-    return rawMetrics.map(m => {
-      const v = vehicleMap[m.vehicleId] || {};
-      return Object.assign({}, m, {
-        group: v.group || 'Sin zona'
-      });
-    });
+    // MockData.getMetrics() already returns { driver, vehicle, metrics, fuelData }
+    // with driver.group set from DRIVERS catalog — no extra processing needed.
+    return DP360.MockData.getMetrics(dateFrom, dateTo);
   }
 
   // ─── Public loadDriverMetrics override for mock mode ─────────────────────
