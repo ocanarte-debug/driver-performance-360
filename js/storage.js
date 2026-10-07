@@ -123,6 +123,11 @@ DP360.Storage = (function () {
     return _set('coaching_plans', plans);
   }
 
+  /** Retorna el plan de coaching de un conductor específico, o null si no existe. */
+  function getCoachingPlan(driverId) {
+    return getCoachingPlans().find(p => p.driverId === driverId) || null;
+  }
+
   function deleteCoachingPlan(planId) {
     const plans = getCoachingPlans().filter(p => p.id !== planId);
     return _set('coaching_plans', plans);
@@ -138,7 +143,7 @@ DP360.Storage = (function () {
     exportRuleMapping, importRuleMapping,
     getConfigOverride, setConfigOverride, clearConfigOverride,
     getPreferences, setPreferences, setPreference,
-    getCoachingPlans, saveCoachingPlan, deleteCoachingPlan,
+    getCoachingPlans, getCoachingPlan, saveCoachingPlan, deleteCoachingPlan,
     resetAll
   };
 })();
