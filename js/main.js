@@ -158,9 +158,9 @@
       btn.classList.toggle('active', btn.dataset.view === viewId);
     });
 
-    // Show/hide containers
-    document.querySelectorAll('.view-container').forEach(el => {
-      el.style.display = el.dataset.view === viewId ? '' : 'none';
+    // Show/hide views (match HTML: class="dp360-view" id="view-{id}")
+    document.querySelectorAll('.dp360-view').forEach(el => {
+      el.classList.toggle('view-active', el.id === 'view-' + viewId);
     });
 
     if (params) Object.assign(state, params);
