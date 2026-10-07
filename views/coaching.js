@@ -88,7 +88,7 @@
     if (!el) return;
     if (!DP360.Storage) { el.innerHTML = ''; return; }
 
-    const plans = DP360.Storage.getAllCoachingPlans();
+    const plans = DP360.Storage.getCoachingPlans();
     if (!plans.length) {
       el.innerHTML = '<p class="no-data">No hay planes de coaching creados aún.</p>';
       return;
@@ -119,7 +119,8 @@
     el.querySelectorAll('.btn-delete-plan').forEach(btn => {
       btn.addEventListener('click', function () {
         if (confirm('¿Eliminar plan de coaching?')) {
-          DP360.Storage.deleteCoachingPlan(this.dataset.driverId);
+          const plan = DP360.Storage.getCoachingPlan(this.dataset.driverId);
+          if (plan) DP360.Storage.deleteCoachingPlan(plan.id);
           _renderPlansList();
         }
       });
@@ -204,9 +205,14 @@
     };
 
     const existing = DP360.Storage.getCoachingPlan(driverId);
-    if (!existing) plan.createdAt = plan.updatedAt;
+    if (existing) {
+      plan.id        = existing.id;
+      plan.createdAt = existing.createdAt;
+    } else {
+      plan.createdAt = plan.updatedAt;
+    }
 
-    DP360.Storage.setCoachingPlan(driverId, plan);
+    DP360.Storage.saveCoachingPlan(plan);
     _closePlanModal();
     _renderPlansList();
   }

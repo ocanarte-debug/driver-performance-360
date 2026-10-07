@@ -257,9 +257,16 @@
     }
     const config = DP360.App ? DP360.App.getState().scoringConfig : null;
 
-    const weeks  = trend.map(t => t.weekLabel);
+    const weeks  = trend.map(t => t.week || t.weekLabel || t.period || '');
     const scores = trend.map(t => {
-      const ev = DP360.ScoreEngine.evaluateAll([t.metrics], config);
+      // getDriverWeeklyTrend returns flat objects; wrap into the nested
+      // { driver, vehicle, metrics, fuelData } shape that evaluateDriver expects.
+      const ev = DP360.ScoreEngine.evaluateAll([{
+        driver:  { id: d.driverId, name: d.driverName, group: d.group },
+        vehicle: { vehicleType: d.vehicleType, fuelType: d.fuelType },
+        metrics:  t,
+        fuelData: { fuelType: d.fuelType, totalUsed: 0, distanceKm: t.distanceKm || 0 }
+      }], config);
       return ev[0] ? Math.round(ev[0].score) : null;
     }).filter(s => s !== null);
 
