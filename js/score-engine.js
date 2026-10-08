@@ -261,8 +261,11 @@ DP360.ScoreEngine = (function () {
       score: C.round(finalScore, 1),
       safetyScore: C.round(safetyResult.score, 1),
       efficiencyScore: C.round(efficiencyResult.score, 1),
-      safety: safetyResult,
-      efficiency: efficiencyResult,
+      // Components flattened to top level for view compatibility
+      // (e.g. d.safety.speeding, d.efficiency.fuel, d.efficiency.idling)
+      // while preserving d.safety.components.* and d.efficiency.components.*
+      safety: { ...safetyResult, ...safetyResult.components },
+      efficiency: { ...efficiencyResult, ...efficiencyResult.components },
       breakdown,
       statusLabel: status.label,
       statusColor: status.color,
